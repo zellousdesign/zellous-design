@@ -1,0 +1,97 @@
+---
+page_title: 'Contact | Zellous Design | Connersville, IN'
+page_description: "Tell us about your web design project, and we'll be in touch soon!"
+form_submit_button_text: Send Message
+hero_brightness_level: bright
+warning: USE CAUTION WHEN EDITING BELOW THIS POINT
+class: page__contact
+layout: default
+canonical: 'http://zellous.design/contact'
+---
+
+<section class="hero-section">
+    <h1 class="editable page__heading"><span>Let's hear about your website. I'm all ears.</span></h1>
+    <div class="hero__img-holder">
+        <img class="editable hero__img" src="/img/goat.jpg" alt="A close up photo of a goat looking straight at the camera." />
+    </div>
+</section>
+<section>
+    <form class="contact__form" data-parsley-validate="">
+        <div class="grid">
+            <div class="grid__item">
+                <div class="form-holder">
+                    <div class="field-group">
+                        <div class="form__field">
+                            <input class="field__input" type="text" name="name" required="" />
+                            <p class="editable field__label"><label>My <strong>name</strong> is:*</label></p>
+                        </div>
+                        <div class="form__field">
+                            <input class="field__input" type="email" name="email" required="" data-parsley-trigger="change" />
+                            <p class="editable field__label"><label>Here's my <strong>email</strong>:*</label></p>
+                        </div>
+                        <div class="form__field">
+                            <input class="field__input" type="text" minlength="9" data-parsley-trigger="change" name="phone" />
+                            <p class="editable field__label"><label>and my <strong>phone</strong>:</label></p>
+                        </div>
+                        <div class="form__field form__field--checkbox clearfix">
+                            <input id="connersville" type="checkbox" name="connersville[]" value="yes" />
+                            <p class="editable editable--label"><label class="checkbox__label" for="connersville">My business is located in Connersville, Indiana. 20% off please!</label></p>
+                        </div>
+                    </div>
+                    <div class="form__field form__field--textarea">
+                        <textarea class="field__textarea" name="message" required=""></textarea>
+                        <p class="editable field__label"><label><strong>Message</strong>:*</label></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="grid__item">
+                <!--<input type="hidden" name="_to" value="brandon@zellous.design">-->
+                <!--<input type="hidden" name="_subject" value="Zellous Design - Contact Form">-->
+                <!--<input type="text" name="_gotcha" style="display: none;">-->
+                <!--<input name="_to" value="brandon@zellous.design" type="hidden">-->
+                <input type="hidden" name="_subject" value="Zellous Design - Contact form" />
+                <input type="text" name="_gotcha" style="display:none" />
+                <div class="btn submit-btn--holder">
+                    <input class="submit-btn" type="submit" value="{{ page.form_submit_button_text }}" />
+                </div>
+                <div class="contact__form-messages"></div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<!--split-->
+
+<script src="/js/ext__parsley/parsley.min.js"></script>
+        
+<script type="text/javascript">
+    $('.contact__form').parsley();
+    
+    // $.ajax({
+    //     url: "https://formspree.io/brandon@zellous.design", 
+    //     method: "POST",
+    //     data: {message: "Message sent!"},
+    //     dataType: "json"
+    // });
+    
+    var $contactForm = $('.contact__form');
+    var $contactMessages = $('.contact__form-messages');
+    $contactForm.submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '//formspree.io/brandon@zellous.design',
+            method: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                $contactMessages.append('<div class="alert alert--loading">Sending message…</div>');
+            },
+            success: function(data) {
+                $contactMessages.find('.alert--loading').hide();
+                $contactMessages.append('<div class="alert alert--success">Message sent!</div>');
+            }
+        });
+    });
+   </script>
